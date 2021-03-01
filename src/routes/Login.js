@@ -13,19 +13,15 @@ export default function Login() {
     let auth = useAuthContext();
 
     let { from } = location.state || { from: { pathname: "/" } };
-    let login = () => {
-        auth.signin(() => {
-            history.replace(from);
-        });
-    };
+
+    document.querySelector("#gapi").style.visibility = auth.user ? "hidden" : "visible";
+    if (auth.user) setTimeout(() => history.replace(from));
 
     return (
         <div>
             <h1>Login</h1>
             <p>You must log in to view the page at {from.pathname}</p>
-            {auth.inProgress
-                ? "Signing in..."
-                : <button onClick={login}>Log in</button>}
         </div>
     );
+
 }

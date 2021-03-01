@@ -6,11 +6,11 @@ export default function AuthStatus() {
     let auth = useAuthContext();
 
     function signout() {
-        auth.signout(() => history.push("/"));
+        auth.signOut(() => history.push("/"));
     }
 
     return <section>
-        {auth.user ? `Logged in as ${auth.user}` : "Not logged in"}
+        {auth.user ? `Logged in as ${auth.user.name}` : "Not logged in"}
         {auth.user && <button onClick={signout}>Sign out</button>}
     </section>;
 

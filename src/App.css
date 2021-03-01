@@ -16,3 +16,7 @@ header {
 header button {
     margin-left: 50px;
 }
+
+#gapi {
+    visibility: hidden;
+}
