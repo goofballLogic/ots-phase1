@@ -2,44 +2,68 @@ import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import ProvideUserContext from "./ProvideUserContext";
 import AuthStatus from "./AuthStatus";
-import Teams, { teamsPath } from "./routes/Teams";
-import Login, { loginPath } from "./routes/Login";
+
+import Teams, { path as teamsPath } from "./routes/Teams/Teams";
+import Login, { path as loginPath } from "./routes/Login";
+import EditTeam, { path as editTeamPath, pathToCreate as createTeamPath } from "./routes/Teams/EditTeam";
+import ViewTeam, { path as viewTeamPath } from "./routes/Teams/ViewTeam";
+import Home from "./routes/Home";
+
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
+import useAuthContext from "./hooks/useAuthContext";
 
 export default function App() {
+
   return (
     <ProvideUserContext>
-      <Router>
-        <header>
-          <AuthStatus />
-        </header>
-
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to={teamsPath}>Teams</Link>
-        </nav>
-
-        <main>
-          <Switch>
-            <Route path={loginPath}>
-              <Login />
-            </Route>
-            <PrivateRoute path={teamsPath}>
-              <Teams />
-            </PrivateRoute>
-            <Route path="/" exact={true}>
-              <h1>Welcome to dev@OpenTeamSpace</h1>
-            </Route>
-          </Switch>
-        </main>
-
-      </Router>
+      <Routes />
     </ProvideUserContext>
+  );
+}
+
+function Routes() {
+
+  let { user } = useAuthContext();
+  useEffect(() => {
+
+    document.body.dataset.otsauth = !!user;
+
+  }, [user]);
+
+  return (
+    <Router>
+
+      <header>
+        <AuthStatus />
+      </header>
+      <main>
+        <Switch>
+          <Route path={loginPath}>
+            <Login />
+          </Route>
+          <PrivateRoute path={teamsPath} exact={true}>
+            <Teams />
+          </PrivateRoute>
+          <PrivateRoute path={editTeamPath} exact={true}>
+            <EditTeam />
+          </PrivateRoute>
+          <PrivateRoute path={createTeamPath} exact={true}>
+            <EditTeam />
+          </PrivateRoute>
+          <PrivateRoute path={viewTeamPath} exact={true}>
+            <ViewTeam />
+          </PrivateRoute>
+          <Route path="/" exact={true}>
+            <Home />
+          </Route>
+        </Switch>
+      </main>
+
+    </Router>
   );
 }

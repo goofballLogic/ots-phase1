@@ -1,0 +1,25 @@
+.team>a {
+    display: flex;
+    height: 10em;
+    width: 10em;
+    flex-direction: column;
+    text-align: center;
+    padding: 1em;
+    margin: 5px;
+    border: solid 1px transparent;
+}
+
+.team>a:hover {
+    border: solid 0.1px #DDD;
+}
+
+.team>a .pic {
+    flex: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+img.team {
+    max-width: 200px;
+}

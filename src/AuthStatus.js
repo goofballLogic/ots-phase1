@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import useAuthContext from "./hooks/useAuthContext";
 
 export default function AuthStatus() {
@@ -9,9 +9,12 @@ export default function AuthStatus() {
         auth.signOut(() => history.push("/"));
     }
 
-    return <section>
-        {auth.user ? `Logged in as ${auth.user.name}` : "Not logged in"}
-        {auth.user && <button onClick={signout}>Sign out</button>}
-    </section>;
+    return <>
+        <Link to="/" className="home">Home</Link>
+        <div>
+            {auth.user ? `Logged in as ${auth.user.name}` : "Not logged in"}
+            {auth.user && <button onClick={signout}>Sign out</button>}
+        </div>
+    </>;
 
 }

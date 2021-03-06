@@ -1,22 +1,64 @@
 nav {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1em;
 }
 
 header {
+    overflow-y: hidden;
     height: 2em;
+    line-height: 2em;
     display: flex;
     background-color: black;
     color: white;
     align-items: center;
+}
+
+main {
     padding: 5px;
-    margin-bottom: 5px;
 }
 
 header button {
-    margin-left: 50px;
+    margin-left: 5px;
 }
 
-#gapi {
+[data-otsauth=true] #gapi {
     visibility: hidden;
+}
+
+a.home {
+    height: 2em;
+    margin-right: 5px;
+    background-color: #EEE;
+    text-decoration: none;
+    color: black;
+    display: inline-flex;
+    align-items: flex-end;
+    width: 5em;
+    padding-right: 5px;
+    padding-bottom: 1px;
+}
+
+a.home::before {
+    flex: 1;
+    content: "\e88a";
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+    /* Support for IE. */
+    font-feature-settings: 'liga';
 }
