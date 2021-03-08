@@ -50,7 +50,7 @@ form button {
   margin: 0px 10px;
 }
 
-.image-button img {
+.image-button img, .image-button svg {
   max-width: 10em;
   max-height: 10em;
   margin: 10px;

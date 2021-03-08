@@ -11,6 +11,9 @@ import Teams, { path as teamsPath } from "./routes/Teams/Teams";
 import Login, { path as loginPath } from "./routes/Login";
 import EditTeam, { path as editTeamPath, pathToCreate as createTeamPath } from "./routes/Teams/EditTeam";
 import ViewTeam, { path as viewTeamPath } from "./routes/Teams/ViewTeam";
+
+import EditTeamMember, { path as editTeamMemberPath, pathToCreate as createTeamMemberPath } from "./routes/Teams/Members/EditMember";
+
 import Home from "./routes/Home";
 
 import "./App.css";
@@ -57,6 +60,12 @@ function Routes() {
           </PrivateRoute>
           <PrivateRoute path={viewTeamPath} exact={true}>
             <ViewTeam />
+          </PrivateRoute>
+          <PrivateRoute path={createTeamMemberPath} exact={true}>
+            <EditTeamMember />
+          </PrivateRoute>
+          <PrivateRoute path={editTeamMemberPath} exact={true}>
+            <EditTeamMember />
           </PrivateRoute>
           <Route path="/" exact={true}>
             <Home />

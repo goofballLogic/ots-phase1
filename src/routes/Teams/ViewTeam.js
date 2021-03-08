@@ -28,7 +28,28 @@ export default function ViewTeam() {
             :
             <>
                 <h1>{team.name}</h1>
-                <Link to={`/teams/edit/${encodeURIComponent(team.id)}`}>Edit</Link>
+                <nav>
+                    <Link to={`/teams/edit/${encodeURIComponent(team.id)}`}>Edit</Link>
+                </nav>
                 <img alt="team logo" className="team" src={team.img}></img>
+                <h2>Members</h2>
+                <Link to={`/teams/${encodeURIComponent(team.id)}/members/edit`}>Add a team member</Link>
+                {Members(team)}
             </>;
+}
+
+function Members(team) {
+    return (team?.members && team.members.length)
+        ? <ul className="members">
+            {team.members.map(m => Member(m, team))}
+        </ul>
+        : <div>No team members yet</div>
+}
+
+function Member(member, team) {
+    return <li key={member.id}>
+        {member.img}<br />
+        {member.name}<br />
+        <Link to={`/teams/${encodeURIComponent(team.id)}/members/edit/${encodeURIComponent(member.id)}`}>Edit</Link>
+    </li>;
 }

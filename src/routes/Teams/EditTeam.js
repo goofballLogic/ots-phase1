@@ -30,7 +30,7 @@ export default function EditTeam() {
 
     function handleStored(err) {
         if (err) throw err;
-        history.replace("/teams");
+        history.goBack();
     }
 
     function handleFormSubmit(e) {
@@ -40,7 +40,7 @@ export default function EditTeam() {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         const detail = {
-            team: { ...data, id: id && decodeURIComponent(id) },
+            data: { ...data, id: id && decodeURIComponent(id), "@type": "Team" },
             callback: handleStored
         };
         document.dispatchEvent(new CustomEvent("store-object", { detail }));
@@ -64,10 +64,10 @@ export default function EditTeam() {
         </form>
 
         <button className="image-button" type="button" onClick={() => document.querySelector("#etimg").value = heavyData}>
-            <img src={heavyData} />
+            <img alt="heavy" src={heavyData} />
         </button>
         <button className="image-button" type="button" onClick={() => document.querySelector("#etimg").value = lightData}>
-            <img src={lightData} />
+            <img alt="light" src={lightData} />
         </button>
 
     </>;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { path as editTeamPath, pathToCreate as createTeamPath } from "./EditTeam";
+import { pathToCreate as createTeamPath } from "./EditTeam";
 import "./Team.css";
 
 export const path = "/teams";

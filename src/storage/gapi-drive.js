@@ -7,6 +7,7 @@ document.addEventListener("gapi-user", e => {
 });
 
 const theBottomFeeders = {
+    "@type": "Team",
     id: "teams.27364545987",
     name: "The bottom feeders",
     img: bottomFeedersURL()
@@ -24,18 +25,53 @@ function fetchObject(path, callback) {
     }, (Math.random() * 500));
 }
 
-function storeObject(team, callback) {
-    console.log(team);
-    team = team || {};
-    let { id } = team;
-    if (!id) id = `teams.${Date.now()}_${Math.random().toString().substring(2)}`;
-    const storedTeam = fakeData[id] || {};
-    Object.assign(storedTeam, team, { id });
-    fakeData[id] = storedTeam;
-    if (!fakeData.teams.includes(storedTeam))
-        fakeData.teams.push(storedTeam);
-    console.log(fakeData);
-    callback && callback();
+function initTeam(data) {
+
+    data = { ...data };
+    const rnd = () => `${Date.now()}_${Math.random().toString().substring(2)}`;
+    if (!data.id) {
+        data.id = `teams.${rnd()}`;
+    }
+    if (!data.members) {
+        data.members = [];
+    } else {
+        data.members = data.members.map(m => {
+            if (m.id) return m;
+            return { ...m, id: `${data.id}_members_${rnd()}` };
+        });
+    }
+    return data;
+
+}
+
+function storeObject(data, callback) {
+
+    try {
+        if (!data) throw new Error("No data supplied");
+        const dataType = data["@type"];
+        if (!dataType) throw new Error("Data type not specified");
+        switch (dataType) {
+            case "Team":
+                data = initTeam(data);
+                break;
+            default:
+                throw new Error(`Unrecognised data type: ${dataType}`);
+        }
+        const { id } = data;
+
+        const storedData = fakeData[id] || {};
+        Object.assign(storedData, data);
+        fakeData[id] = storedData;
+        if (dataType === "Team" && !fakeData.teams.includes(storedData))
+            fakeData.teams.push(storedData);
+
+        if (callback) callback();
+    } catch (err) {
+        if (callback)
+            callback(err);
+        else
+            throw err;
+    }
 }
 
 document.addEventListener("fetch-object", e => {
@@ -51,8 +87,8 @@ document.addEventListener("store-object", e => {
 
     if (!user) return;
     if (!e.detail) return;
-    const { team, callback } = e.detail;
-    storeObject(team, callback);
+    const { data, callback } = e.detail;
+    storeObject(data, callback);
 
 });
 
